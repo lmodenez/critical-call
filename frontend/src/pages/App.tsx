@@ -1,5 +1,7 @@
 import styles from './app.module.scss';
 
+import { AiOutlineMenu } from 'react-icons/ai';
+
 export default function App() {
   return (
     <main className={styles.container}>
@@ -25,8 +27,13 @@ export default function App() {
               <td>Performance</td>
               <td>21/06/2021</td>
               <td>
-                <button type="button">Encerrar</button>
-                <button type="button">Excluir</button>
+                <div className={styles.dropdown}>
+                  <AiOutlineMenu size={24} />
+                  <div id="myDropdown" className={styles.dropdownContent}>
+                    <a href="/">Encerrar</a>
+                    <a href="/">Deletar</a>
+                  </div>
+                </div>
               </td>
             </tr>
             <tr>
@@ -37,8 +44,13 @@ export default function App() {
               <td>Parado</td>
               <td>21/06/2021</td>
               <td>
-                <button type="button">Encerrar</button>
-                <button type="button">Excluir</button>
+                <div className={styles.dropdown}>
+                  <AiOutlineMenu size={24} />
+                  <div id="myDropdown" className={styles.dropdownContent}>
+                    <a href="/">Encerrar</a>
+                    <a href="/">Deletar</a>
+                  </div>
+                </div>
               </td>
             </tr>
             <tr>
@@ -49,12 +61,7 @@ export default function App() {
               <td>Morreu</td>
               <td>21/06/2021</td>
               <td>
-                <button type="button" className="button1">
-                  Encerrar
-                </button>
-                <button type="button" className="button2">
-                  Excluir
-                </button>
+                <AiOutlineMenu size={24} />
               </td>
             </tr>
           </tbody>
