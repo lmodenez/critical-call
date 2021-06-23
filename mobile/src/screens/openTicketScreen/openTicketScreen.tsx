@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import RNPickerSelect from 'react-native-picker-select';
 
 import {
@@ -12,6 +12,8 @@ import {
   BackHandler,
 } from 'react-native';
 
+import api from '../../services/api';
+
 const alertImage = require('../../../assets/alert.png');
 
 const AppButton = ({ onPress, title, backgroundColor }: any) => (
@@ -23,21 +25,39 @@ const AppButton = ({ onPress, title, backgroundColor }: any) => (
   </TouchableOpacity>
 );
 
-const buttonAlert = () =>
-  Alert.alert(
-    'Confirmar',
-    'Lembre-se que está ação irá tornar sua solitação como prioritária e poderá ocasionar transtornos, deseja continuar ?',
-    [
-      {
-        text: 'Cancelar',
-        onPress: () => console.log('Cancel Pressed'),
-        // style: 'cancel',
-      },
-      { text: 'Confirmar', onPress: () => console.log('OK Pressed') },
-    ]
-  );
-
 const OpenTicket = () => {
+  const [solicitante, setSolicitante] = useState('');
+  const [categoria, setCategoria] = useState('');
+  const [subcategoria, setSubcategoria] = useState('');
+
+  async function postTicket(
+    solicitante: string,
+    categoria: string,
+    subcategoria: string
+  ) {
+    api
+      .post(
+        `/tickets?solicitante=${solicitante}&categoria=${categoria}&subcategoria=${subcategoria}`
+      )
+      .then((response) => response.status);
+  }
+
+  const buttonAlert = () =>
+    Alert.alert(
+      'Confirmar',
+      'Lembre-se que está ação irá tornar sua solitação como prioritária e poderá ocasionar transtornos, deseja continuar ?',
+      [
+        {
+          text: 'Cancelar',
+          onPress: () => console.log('Cancel Pressed'),
+        },
+        {
+          text: 'Confirmar',
+          onPress: () => postTicket(solicitante, categoria, subcategoria),
+        },
+      ]
+    );
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -49,34 +69,34 @@ const OpenTicket = () => {
         </View>
         <View style={styles.contentInput}>
           <RNPickerSelect
-            onValueChange={(value) => console.log(value)}
+            onValueChange={(value) => setSolicitante(value)}
             useNativeAndroidPickerStyle={false}
             items={[
-              { label: 'Maicon', value: 'maicon' },
-              { label: 'Silvia', value: 'silvia' },
-              { label: 'Maria', value: 'maria' },
+              { label: 'Maicon', value: 'Maicon' },
+              { label: 'Silvia', value: 'Silvia' },
+              { label: 'Maria', value: 'Maria' },
             ]}
             placeholder={picker.placeholderUser}
             style={picker.pickerStyle}
           />
           <RNPickerSelect
-            onValueChange={(value) => console.log(value)}
+            onValueChange={(value) => setCategoria(value)}
             useNativeAndroidPickerStyle={false}
             items={[
-              { label: 'Coletores', value: 'coletores' },
-              { label: 'JD Edwards', value: 'linhaparada' },
-              { label: 'Infraestrutura', value: 'recautomatico' },
+              { label: 'Coletores', value: 'Coletores' },
+              { label: 'JD Edwards', value: 'JD Edwards' },
+              { label: 'Infraestrutura', value: 'Infraestrutura' },
             ]}
             placeholder={picker.placeholderCategory}
             style={picker.pickerStyle}
           />
           <RNPickerSelect
-            onValueChange={(value) => console.log(value)}
+            onValueChange={(value) => setSubcategoria(value)}
             useNativeAndroidPickerStyle={false}
             items={[
-              { label: 'Desempenho', value: 'football' },
-              { label: 'Produção', value: 'baseball' },
-              { label: 'Rede', value: 'hockey' },
+              { label: 'Desempenho', value: 'Desempenho' },
+              { label: 'Produção', value: 'Produção' },
+              { label: 'Rede', value: 'Rede' },
             ]}
             placeholder={picker.placeholderSubcategory}
             style={picker.pickerStyle}
