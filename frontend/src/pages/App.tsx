@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import api from '../services/api';
 
 import styles from './app.module.scss';
@@ -7,14 +7,7 @@ import { AiOutlineMenu } from 'react-icons/ai';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import Loader from 'react-loader-spinner';
 
-type ticketType = {
-  id: number;
-  solicitante: string;
-  mecanismo: string;
-  categoria: string;
-  subcategoria: string;
-  data_abertura: Date;
-};
+import { ticketType } from '../types/TicketType';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
